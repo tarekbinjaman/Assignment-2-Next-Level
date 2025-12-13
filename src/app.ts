@@ -1,5 +1,6 @@
 import express from "express";
 import initDB from "./config/db";
+import { authRoutes } from "./modules/auth/auth.routes";
 
 const app = express();
 
@@ -12,6 +13,8 @@ initDB();
 app.get("/", (req, res) => {
     res.send("Assignment 2 is running")
 });
+
+app.use("/api/v1/auth", authRoutes)
 
 
 app.use((req, res) => {
