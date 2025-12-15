@@ -58,13 +58,41 @@ const getSingleUser = async (req: Request, res: Response) => {
 };
 
 const updateUser = async (req: Request, res: Response) => {
-  const { name, email, phone } = req.body;
+  const { name, email, phone, role } = req.body;
+  const targetUserId = req.params.id as string;
+  const loggedInUser = req.user!;
+
+  // if user trying to update someone else profile then it will stop
+  if(loggedInUser.role === "customer" && loggedInUser.id !== targetUserId) {
+    return res.status(403).json({
+      message: "You can update only your own profile"
+    });
+  }
+
+  let updatePayload;
+  if(loggedInUser.role === "admin") {
+    updatePayload= {
+      name: name ?? null,
+      email: email ?? null,
+      phone: phone ?? null,
+      role: role ?? null,
+    }
+  } else {
+    updatePayload = {
+      name: name ?? null,
+      email: email ?? null,
+      phone: phone ?? null,
+      role: null, // its forcing to not update role
+    }
+  }
+
   try {
     const result = await userService.updateUser(
-      name,
-      email,
-      phone,
-      req.params.id as string
+      updatePayload.name,
+      updatePayload.email,
+      updatePayload.phone,
+      updatePayload.role,
+      targetUserId
     );
     if (result.rows.length === 0) {
       res.status(404).json({
