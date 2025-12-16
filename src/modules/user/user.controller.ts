@@ -60,38 +60,46 @@ const getSingleUser = async (req: Request, res: Response) => {
 const updateUser = async (req: Request, res: Response) => {
   const { name, email, phone, role } = req.body;
   const targetUserId = req.params.id as string;
+  const targetUserIdNumber = Number(req.params.id as string);
   const loggedInUser = req.user!;
 
   // if user trying to update someone else profile then it will stop
-  if(loggedInUser.role === "customer" && loggedInUser.id !== targetUserId) {
+  if(loggedInUser.role === "customer" && loggedInUser.id !== targetUserIdNumber) {
     return res.status(403).json({
-      message: "You can update only your own profile"
+      message: "You can update only your own profile",
+      user: req.user
     });
   }
 
-  let updatePayload;
-  if(loggedInUser.role === "admin") {
-    updatePayload= {
-      name: name ?? null,
-      email: email ?? null,
-      phone: phone ?? null,
-      role: role ?? null,
-    }
+  let updatePayload: {
+    name?: string;
+    email?: string;
+    phone?: string;
+    role?: string;
+  };
+
+  if (loggedInUser.role === "admin") {
+    updatePayload = {
+      ...(name !== undefined && { name }),
+      ...(email !== undefined && { email }),
+      ...(phone !== undefined && { phone }),
+      ...(role !== undefined && { role }),
+    };
   } else {
     updatePayload = {
-      name: name ?? null,
-      email: email ?? null,
-      phone: phone ?? null,
-      role: null, // its forcing to not update role
-    }
+      ...(name !== undefined && { name }),
+      ...(email !== undefined && { email }),
+      ...(phone !== undefined && { phone }),
+      // role intentionally excluded
+    };
   }
 
   try {
     const result = await userService.updateUser(
-      updatePayload.name,
-      updatePayload.email,
-      updatePayload.phone,
-      updatePayload.role,
+      updatePayload.name as string,
+      updatePayload.email as string,
+      updatePayload.phone as string,
+      updatePayload.role as string,
       targetUserId
     );
     if (result.rows.length === 0) {
@@ -110,11 +118,19 @@ const updateUser = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: err.message,
+      user: req.user
     });
   }
 };
 
 const deleteUser = async (req: Request, res: Response) => {
+  const loggedInUser = req.user!;
+  if(loggedInUser.role !== "admin") {
+    return res.status(403).json({
+      success: false,
+      message: "only andmin can delete user"
+    })
+  }
   try {
     const result = await userService.deleteUser(req.params.id!);
     if (result.rowCount === 0) {
