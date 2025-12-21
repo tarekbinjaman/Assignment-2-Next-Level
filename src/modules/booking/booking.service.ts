@@ -22,7 +22,7 @@ const createBooking = async (Payload: Record<string, unknown>) => {
   }
 
   // price calculation
-  const total_Price = numberOfDays * daily_rent_price;
+  const total_price = numberOfDays * daily_rent_price;
   const status = "active";
   const bookngResult = await pool.query(
     `
@@ -36,7 +36,7 @@ const createBooking = async (Payload: Record<string, unknown>) => {
       vehicle_id,
       rent_start_date,
       rent_end_date,
-      total_Price,
+      total_price,
       status,
     ]
   );
@@ -52,15 +52,14 @@ const createBooking = async (Payload: Record<string, unknown>) => {
 const getBookingsByAdmin = async () => {
   const result = await pool.query(`
     SELECT
-    b.id
+    b.id,
     b.customer_id,
     b.vehicle_id,
     b.rent_start_date,
     b.total_price,
-    b.tatus,
-
+    b.status,
     u.name As customer_name,
-    u.eamil as customer_email,,
+    u.email as customer_email,
 
     v.vehicle_name,
     v.registration_number
@@ -74,7 +73,30 @@ const getBookingsByAdmin = async () => {
   return result.rows;
 };
 
+const getBookingByCustomer = async (CustomerId: string) => {
+  const result = await pool.query(`
+    SELECT
+      b.id,
+      b.vehicle_id,
+      b.rent_start_date,
+      b.rent_end_date,
+      b.total_price,
+      b.status,
+
+      v.vehicle_name,
+      v.registration_number,
+      v.type
+
+      FROM bookings b
+      JOIN vehicles v ON b.vehicle_id = v.id
+    WHERE b.customer_id = $1
+    ORDER BY b.created_at DESC;
+    `, [CustomerId])
+    return result.rows
+}
+
 export const bookingService = {
   createBooking,
-  getBookingsByAdmin
+  getBookingsByAdmin,
+  getBookingByCustomer
 };
