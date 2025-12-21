@@ -74,7 +74,51 @@ const getBookings = async (req: Request, res: Response) => {
   }
 };
 
+const updateBookingStatus = async (req: Request, res: Response) => {
+  try {
+     const {bookingID } = req.params;
+     const {status} = req.body;
+     const user = req.user!;
+     
+    //  customer can only cancel their own booking
+
+
+    if(status === "cancelled" && user.role !== "customer") {
+      return res.status(403).json({
+        success: false,
+        message: "Only customer can cancelled their own booking"
+      })
+    }
+
+    // admin can only mark as returned 
+    if(status === "returned" && user.role !== "admin") {
+      return res.status(403).json({
+        success: false,
+        message: "Only admin can mark 'returned'"
+      })
+    }
+
+    const updatedBooking = await bookingService.updateBookingStatus(+bookingID!, status, user);
+    res.status(200).json({
+      success: true,
+      message: status === "cancelled"
+      ? "Booking cancelled successfully"
+      : "Booking marked as returned",
+      data: updatedBooking
+    })
+
+  } catch(err: any) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+      error: err
+    })
+
+  }
+}
+
 export const bookingController = {
   createBooking,
-  getBookings
+  getBookings,
+  updateBookingStatus
 };

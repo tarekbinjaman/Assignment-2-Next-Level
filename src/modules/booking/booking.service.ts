@@ -95,8 +95,42 @@ const getBookingByCustomer = async (CustomerId: string) => {
     return result.rows
 }
 
+const updateBookingStatus = async(bookingId: number, status: string, user: any) => {
+  const bookingResult = await pool.query(`SELECT * FROM bookings WHERE id = $1`, [bookingId]);
+  if(bookingResult.rowCount === 0) throw new Error("Booking not found");
+  const booking = bookingResult.rows[0];
+
+  // so only customer can cancel their own booking
+  if(status === "cancelled" && booking.customer_id !== user.id) {
+    throw new Error("You can only cancel your own booking");
+  }
+
+  // now update booking status 
+  const updateResult = await pool.query(
+        `UPDATE bookings SET status=$1 WHERE id=$2 RETURNING *`,
+    [status, bookingId]
+  );
+
+  const updatedBooking = updateResult.rows[0];
+
+
+  // if admin marked returned then the availability of that vehicles will be update in vehicles row
+  if(status === "returned") {
+    await pool.query(
+      `
+      UPDATE vehicles SET availability_status='available' WHERE id=$1
+      `,
+      [booking.vehicle_id]
+    );
+    updatedBooking.vehicle = {availability_status: "available"};
+  }
+
+  return updatedBooking;
+}
+
 export const bookingService = {
   createBooking,
   getBookingsByAdmin,
-  getBookingByCustomer
+  getBookingByCustomer,
+  updateBookingStatus
 };
