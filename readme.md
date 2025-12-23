@@ -15,3 +15,13 @@
 - Real-Time Status: Tracks and updates vehicle availability instantly.
 
 - Duration-Based Costs: Dynamically computes rental prices according to the booking duration.
+
+# Technology Stack
+
+- Backend Runtime & Framework: Powered by Node.js with the Express.js 5.x framework for server-side logic and API routing, implemented in TypeScript 5.x. Data is persisted using PostgreSQL as the primary production database.
+
+- Security Implementation: Implements JWT (JSON Web Tokens) to handle user sessions and authentication. User passwords are protected using the bcryptjs library for secure hashing.
+
+- Development Utilities: Utilizes tsx for executing TypeScript code during development, dotenv for managing environment variables, and the pg client library for connecting to PostgreSQL.
+
+- Hosting Platform: The application is deployed and hosted on the Vercel platform.
