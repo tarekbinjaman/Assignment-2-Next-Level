@@ -177,15 +177,23 @@ Routes for managing user accounts, typically accessible only to administrators.
 | PUT    | `/api/v1/vehicles/:id` | Updates a vehicle's details                                                           | Fields to update (e.g., `rentalPrice`, `status`)                                         | Admin only        |
 | DELETE | `/api/v1/vehicles/:id` | Removes a vehicle from the inventory                                                  | —                                                                                        | Admin only        |
 
-
 ## 📦 Booking (Rental Lifecycle) API Endpoints
 
 Routes that handle the rental lifecycle: creating, viewing, and managing bookings.
 
-| Method | Endpoint                    | Description                                                     | Required Data (POST)                 | Access                         |
-|--------|-----------------------------|-----------------------------------------------------------------|-------------------------------------|--------------------------------|
-| GET    | `/api/v1/bookings`             | Gets bookings. Admins see all; customers see only their own     | —                                   | Customer, Admin                |
-| GET    | `/api/v1/bookings/:bookingID`         | Gets details of a specific booking                              | —                                   | Customer (own only), Admin     |
-| POST   | `/api/v1/bookings`             | Creates a new booking                                          | `vehicleId`, `startDate`, `endDate` | Customer                       |
-| PUT    | `/api/v1/bookings/:bookingID/status`  | Updates a booking's status (e.g., confirmed, cancelled)        | `status`                            | Admin only                     |
-| DELETE | `/api/v1/bookings/:bookingID`         | Cancels a booking                                              | —                                   | Customer (own only), Admin     |
+| Method | Endpoint                             | Description                                                 | Required Data (POST)                | Access                     |
+| ------ | ------------------------------------ | ----------------------------------------------------------- | ----------------------------------- | -------------------------- |
+| GET    | `/api/v1/bookings`                   | Gets bookings. Admins see all; customers see only their own | —                                   | Customer, Admin            |
+| GET    | `/api/v1/bookings/:bookingID`        | Gets details of a specific booking                          | —                                   | Customer (own only), Admin |
+| POST   | `/api/v1/bookings`                   | Creates a new booking                                       | `vehicleId`, `startDate`, `endDate` | Customer                   |
+| PUT    | `/api/v1/bookings/:bookingID/status` | Updates a booking's status (e.g., confirmed, cancelled)     | `status`                            | Admin only                 |
+| DELETE | `/api/v1/bookings/:bookingID`        | Cancels a booking                                           | —                                   | Customer (own only), Admin |
+
+## 🔐 Security & Best Practices
+
+- **Password Protection**: User passwords are securely hashed using `bcryptjs` with configurable salt rounds.
+- **JWT-Based Authentication**: Implements secure, token-based authentication using JSON Web Tokens.
+- **SQL Injection Protection**: Uses parameterized queries to prevent SQL injection attacks.
+- **Input Validation**: All incoming requests are validated through dedicated middleware.
+- **Role-Based Authorization**: Access is controlled based on user roles (Customer / Admin).
+- **Environment Configuration**: Sensitive credentials and keys are stored securely using environment variables.
