@@ -126,17 +126,14 @@ node dist/server.js
 
 # API Endpoints
 
-
-
 ## 🔐 Authentication
 
 Base URL: /api/v1/auth
 
-| Method | Endpoint              | Description                                              | Required Data                                  | Access           |
-|--------|-----------------------|----------------------------------------------------------|------------------------------------------------|------------------|
-| POST   | `/api/v1/auth/signup`    | Registers a new user (Customer or Admin)                 | `name`, `role`, `email`, `password`, `phone`   | Public           |
-| POST   | `/api/v1/auth/signin`    | Authenticates a user and returns a JWT token             | `email`, `password`                            | Public           |
-
+| Method | Endpoint              | Description                                  | Required Data                                | Access |
+| ------ | --------------------- | -------------------------------------------- | -------------------------------------------- | ------ |
+| POST   | `/api/v1/auth/signup` | Registers a new user (Customer or Admin)     | `name`, `role`, `email`, `password`, `phone` | Public |
+| POST   | `/api/v1/auth/signin` | Authenticates a user and returns a JWT token | `email`, `password`                          | Public |
 
 - POST /signup - Register a new user
 
@@ -159,13 +156,23 @@ Base URL: /api/v1/auth
 }
 ```
 
-
 ## 👤 User Management API Endpoints
+
 Routes for managing user accounts, typically accessible only to administrators.
 
-| Method | Endpoint            | Description                                         | Access      |
-|--------|---------------------|-----------------------------------------------------|-------------|
-| GET    | `/api/v1/users`        | Retrieves a list of all users                       | Admin only  |
-| GET    | `/api/v1/users/:id`    | Gets details of a specific user                     | Admin only  |
-| PUT    | `/api/v1/users/:id`    | Updates a user's information (e.g., role, status)  | Admin, customer  |
-| DELETE | `/api/v1/users/:id`    | Deletes a user account                              | Admin only  |
+| Method | Endpoint            | Description                                       | Access          |
+| ------ | ------------------- | ------------------------------------------------- | --------------- |
+| GET    | `/api/v1/users`     | Retrieves a list of all users                     | Admin only      |
+| GET    | `/api/v1/users/:id` | Gets details of a specific user                   | Admin only      |
+| PUT    | `/api/v1/users/:id` | Updates a user's information (e.g., role, status) | Admin, customer |
+| DELETE | `/api/v1/users/:id` | Deletes a user account                            | Admin only      |
+
+## 🚗 Vehicle Management API Endpoints
+
+| Method | Endpoint               | Description                                                                           | Required Data (POST/PUT)                                                                 | Access            |
+| ------ | ---------------------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ----------------- |
+| GET    | `/api/v1/vehicles`     | Gets a list of all available vehicles. Supports query params like `?status=available` | —                                                                                        | Public / Customer |
+| GET    | `/api/v1/vehicles/:id` | Gets detailed information about a specific vehicle                                    | —                                                                                        | Public / Customer |
+| POST   | `/api/v1/vehicles`     | Adds a new vehicle to the inventory                                                   | `vehicle_name`, `type`, `registration_number`, `daily_rent_price`, `availability_status` | Admin only        |
+| PUT    | `/api/v1/vehicles/:id` | Updates a vehicle's details                                                           | Fields to update (e.g., `rentalPrice`, `status`)                                         | Admin only        |
+| DELETE | `/api/v1/vehicles/:id` | Removes a vehicle from the inventory                                                  | —                                                                                        | Admin only        |
