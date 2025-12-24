@@ -176,3 +176,16 @@ Routes for managing user accounts, typically accessible only to administrators.
 | POST   | `/api/v1/vehicles`     | Adds a new vehicle to the inventory                                                   | `vehicle_name`, `type`, `registration_number`, `daily_rent_price`, `availability_status` | Admin only        |
 | PUT    | `/api/v1/vehicles/:id` | Updates a vehicle's details                                                           | Fields to update (e.g., `rentalPrice`, `status`)                                         | Admin only        |
 | DELETE | `/api/v1/vehicles/:id` | Removes a vehicle from the inventory                                                  | —                                                                                        | Admin only        |
+
+
+## 📦 Booking (Rental Lifecycle) API Endpoints
+
+Routes that handle the rental lifecycle: creating, viewing, and managing bookings.
+
+| Method | Endpoint                    | Description                                                     | Required Data (POST)                 | Access                         |
+|--------|-----------------------------|-----------------------------------------------------------------|-------------------------------------|--------------------------------|
+| GET    | `/api/v1/bookings`             | Gets bookings. Admins see all; customers see only their own     | —                                   | Customer, Admin                |
+| GET    | `/api/v1/bookings/:bookingID`         | Gets details of a specific booking                              | —                                   | Customer (own only), Admin     |
+| POST   | `/api/v1/bookings`             | Creates a new booking                                          | `vehicleId`, `startDate`, `endDate` | Customer                       |
+| PUT    | `/api/v1/bookings/:bookingID/status`  | Updates a booking's status (e.g., confirmed, cancelled)        | `status`                            | Admin only                     |
+| DELETE | `/api/v1/bookings/:bookingID`         | Cancels a booking   
