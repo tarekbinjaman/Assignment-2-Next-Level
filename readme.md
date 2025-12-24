@@ -150,11 +150,10 @@ Base URL: /api/v1/auth
 }
 ```
 
-```
-Method	Endpoint	Description	Required Data	Access
-POST	/api/auth/register	Registers a new user (Customer or Admin).	name, email, password, role	Public
-POST	/api/auth/login	Authenticates a user and returns a JWT token.	email, password	Public
-POST	/api/auth/logout	Invalidates the user's current token (if implemented).	(Header: Authorization: Bearer <token>)	Customer, Admin
-GET	/api/auth/profile	Gets the logged-in user's profile information.	(Header: Authorization: Bearer <token>)	Customer, Admin
+## 🔐 Authentication API Endpoints
 
-```
+| Method | Endpoint              | Description                                              | Required Data                                  | Access           |
+|--------|-----------------------|----------------------------------------------------------|------------------------------------------------|------------------|
+| POST   | `/api/auth/signup`    | Registers a new user (Customer or Admin)                 | `name`, `role`, `email`, `password`, `phone`   | Public           |
+| POST   | `/api/auth/signin`    | Authenticates a user and returns a JWT token             | `email`, `password`                            | Public           |
+
