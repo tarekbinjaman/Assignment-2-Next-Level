@@ -188,4 +188,4 @@ Routes that handle the rental lifecycle: creating, viewing, and managing booking
 | GET    | `/api/v1/bookings/:bookingID`         | Gets details of a specific booking                              | —                                   | Customer (own only), Admin     |
 | POST   | `/api/v1/bookings`             | Creates a new booking                                          | `vehicleId`, `startDate`, `endDate` | Customer                       |
 | PUT    | `/api/v1/bookings/:bookingID/status`  | Updates a booking's status (e.g., confirmed, cancelled)        | `status`                            | Admin only                     |
-| DELETE | `/api/v1/bookings/:bookingID`         | Cancels a booking   
+| DELETE | `/api/v1/bookings/:bookingID`         | Cancels a booking                                              | —                                   | Customer (own only), Admin     |

@@ -36,7 +36,7 @@ const getUser = async (req: Request, res: Response) => {
 
 const getSingleUser = async (req: Request, res: Response) => {
   try {
-    const result = await userService.getSingleUser(req.params.id as string);
+    const result = await userService.getSingleUser(req.params.userId as string);
     if (result.rows.length === 0) {
       res.status(404).json({
         success: false,
@@ -59,8 +59,8 @@ const getSingleUser = async (req: Request, res: Response) => {
 
 const updateUser = async (req: Request, res: Response) => {
   const { name, email, phone, role } = req.body;
-  const targetUserId = req.params.id as string;
-  const targetUserIdNumber = Number(req.params.id as string);
+  const targetUserId = req.params.userId as string;
+  const targetUserIdNumber = Number(req.params.userId as string);
   const loggedInUser = req.user!;
 
   // if user trying to update someone else profile then it will stop
@@ -132,7 +132,7 @@ const deleteUser = async (req: Request, res: Response) => {
     })
   }
   try {
-    const result = await userService.deleteUser(req.params.id!);
+    const result = await userService.deleteUser(req.params.userId!);
     if (result.rowCount === 0) {
       res.status(404).json({
         success: false,
