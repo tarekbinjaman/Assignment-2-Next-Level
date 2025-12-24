@@ -126,11 +126,19 @@ node dist/server.js
 
 # API Endpoints
 
-## Authentication Routes
+
+
+## 🔐 Authentication API Endpoints
 
 Base URL: /api/v1/auth
 
-- POST /register - Register a new user
+| Method | Endpoint              | Description                                              | Required Data                                  | Access           |
+|--------|-----------------------|----------------------------------------------------------|------------------------------------------------|------------------|
+| POST   | `/api/auth/signup`    | Registers a new user (Customer or Admin)                 | `name`, `role`, `email`, `password`, `phone`   | Public           |
+| POST   | `/api/auth/signin`    | Authenticates a user and returns a JWT token             | `email`, `password`                            | Public           |
+
+
+- POST /signup - Register a new user
 
 ```
 {
@@ -141,7 +149,7 @@ Base URL: /api/v1/auth
 }
 ```
 
-- POST /login - User login
+- POST /signin - User login
 
 ```
 {
@@ -150,10 +158,4 @@ Base URL: /api/v1/auth
 }
 ```
 
-## 🔐 Authentication API Endpoints
-
-| Method | Endpoint              | Description                                              | Required Data                                  | Access           |
-|--------|-----------------------|----------------------------------------------------------|------------------------------------------------|------------------|
-| POST   | `/api/auth/signup`    | Registers a new user (Customer or Admin)                 | `name`, `role`, `email`, `password`, `phone`   | Public           |
-| POST   | `/api/auth/signin`    | Authenticates a user and returns a JWT token             | `email`, `password`                            | Public           |
 
