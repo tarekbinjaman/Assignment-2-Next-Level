@@ -2,6 +2,17 @@
 
 **Live URL :** https://assignment2-jade-iota-47.vercel.app/
 
+# Admin Credentials
+
+I have setup vercel perfectly.So you can check directly in postman.
+Here is admin email and password
+
+```
+  {  "email": "jaman@gm.com",
+    "password" : "123456789"
+  }
+```
+
 # Features
 
 - Full Vehicle CRUD: Create, retrieve, update, and delete entries in the vehicle inventory.
@@ -25,3 +36,62 @@
 - Development Utilities: Utilizes tsx for executing TypeScript code during development, dotenv for managing environment variables, and the pg client library for connecting to PostgreSQL.
 
 - Hosting Platform: The application is deployed and hosted on the Vercel platform.
+
+# Technology Stack Overview
+
+This project is built with a modern tech stack:
+
+- Backend: Node.js with Express.js 5.x (TypeScript)
+
+- Database: PostgreSQL
+
+- Security: JWT for authentication, bcryptjs for password hashing
+
+- Hosting: Deployed on Vercel
+
+# Prerequisites
+
+Before starting, ensure the following are installed on the system:
+
+- Node.js (v18 or later recommended)
+
+- npm (usually comes with Node.js)
+
+- PostgreSQL (installed and running locally or accessible via a cloud service)
+
+# Setup Guide
+
+### 1. Clone the Repository
+
+```
+git clone https://github.com/tarekbinjaman/Assignment-2-Next-Level.git
+cd Assignment-2-Next-Level
+```
+
+### 2. Install Dependencies
+
+Install all required Node.js packages.
+
+```
+npm install
+```
+
+### 3. Environment Configuration
+Create .env file in root directory
+```
+JWT_SECRET=b8c52ad8b4f8303288a02a2bf856768eed0572346cdd8219014e8ab148f28d5c2f898686660930d0dbc9919ffac173e66c965a75ad223d97e03b57325665a971
+PORT=5000
+CONNECTION_STR=postgresql://neondb_owner:npg_0TfjRGJIvtl5@ep-shiny-dust-ahwy0y9g-pooler.c-3.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+```
+### 4. Database Setup
+- Ensure PostgreSQL is running
+- Create a database (e.g., vehicle_rental_db)
+- The application will automatically create tables on first run
+
+### 5. Run your application
+
+~~~
+npm run dev
+~~~
+
+The server will start on http://localhost:5000
