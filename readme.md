@@ -95,3 +95,50 @@ npm run dev
 ~~~
 
 The server will start on http://localhost:5000
+
+# Usage
+
+## Development Mode
+
+Run:
+
+~~~
+npm run dev
+~~~
+
+## Production Build
+
+1.Compile TypeScript to JavaScript:
+~~~
+npm run build
+~~~
+2.Run the compiled application::
+~~~
+node dist/server.js
+~~~
+
+# API Endpoints
+
+## Authentication Routes
+
+Base URL: /api/v1/auth
+
+- POST /register - Register a new user
+
+~~~
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "SecurePass123",
+  "phone": "1234567890"
+}
+~~~
+
+- POST /login - User login
+
+~~~
+{
+  "email": "dash@example.com",
+  "password": "SecurePass123"
+}
+~~~
