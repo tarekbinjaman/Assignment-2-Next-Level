@@ -128,14 +128,14 @@ node dist/server.js
 
 
 
-## 🔐 Authentication API Endpoints
+## 🔐 Authentication
 
 Base URL: /api/v1/auth
 
 | Method | Endpoint              | Description                                              | Required Data                                  | Access           |
 |--------|-----------------------|----------------------------------------------------------|------------------------------------------------|------------------|
-| POST   | `/api/auth/signup`    | Registers a new user (Customer or Admin)                 | `name`, `role`, `email`, `password`, `phone`   | Public           |
-| POST   | `/api/auth/signin`    | Authenticates a user and returns a JWT token             | `email`, `password`                            | Public           |
+| POST   | `/api/v1/auth/signup`    | Registers a new user (Customer or Admin)                 | `name`, `role`, `email`, `password`, `phone`   | Public           |
+| POST   | `/api/v1/auth/signin`    | Authenticates a user and returns a JWT token             | `email`, `password`                            | Public           |
 
 
 - POST /signup - Register a new user
@@ -145,7 +145,8 @@ Base URL: /api/v1/auth
   "name": "John Doe",
   "email": "john@example.com",
   "password": "SecurePass123",
-  "phone": "1234567890"
+  "phone": "1234567890",
+  "role" : "customer"
 }
 ```
 
@@ -159,3 +160,12 @@ Base URL: /api/v1/auth
 ```
 
 
+## 👤 User Management API Endpoints
+Routes for managing user accounts, typically accessible only to administrators.
+
+| Method | Endpoint            | Description                                         | Access      |
+|--------|---------------------|-----------------------------------------------------|-------------|
+| GET    | `/api/v1/users`        | Retrieves a list of all users                       | Admin only  |
+| GET    | `/api/v1/users/:id`    | Gets details of a specific user                     | Admin only  |
+| PUT    | `/api/v1/users/:id`    | Updates a user's information (e.g., role, status)  | Admin only  |
+| DELETE | `/api/v1/users/:id`    | Deletes a user account                              | Admin only  |
