@@ -77,22 +77,26 @@ npm install
 ```
 
 ### 3. Environment Configuration
+
 Create .env file in root directory
+
 ```
 JWT_SECRET=b8c52ad8b4f8303288a02a2bf856768eed0572346cdd8219014e8ab148f28d5c2f898686660930d0dbc9919ffac173e66c965a75ad223d97e03b57325665a971
 PORT=5000
 CONNECTION_STR=postgresql://neondb_owner:npg_0TfjRGJIvtl5@ep-shiny-dust-ahwy0y9g-pooler.c-3.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
 ```
+
 ### 4. Database Setup
+
 - Ensure PostgreSQL is running
 - Create a database (e.g., vehicle_rental_db)
 - The application will automatically create tables on first run
 
 ### 5. Run your application
 
-~~~
+```
 npm run dev
-~~~
+```
 
 The server will start on http://localhost:5000
 
@@ -102,20 +106,23 @@ The server will start on http://localhost:5000
 
 Run:
 
-~~~
+```
 npm run dev
-~~~
+```
 
 ## Production Build
 
 1.Compile TypeScript to JavaScript:
-~~~
+
+```
 npm run build
-~~~
+```
+
 2.Run the compiled application::
-~~~
+
+```
 node dist/server.js
-~~~
+```
 
 # API Endpoints
 
@@ -125,20 +132,29 @@ Base URL: /api/v1/auth
 
 - POST /register - Register a new user
 
-~~~
+```
 {
   "name": "John Doe",
   "email": "john@example.com",
   "password": "SecurePass123",
   "phone": "1234567890"
 }
-~~~
+```
 
 - POST /login - User login
 
-~~~
+```
 {
   "email": "dash@example.com",
   "password": "SecurePass123"
 }
-~~~
+```
+
+```
+Method	Endpoint	Description	Required Data	Access
+POST	/api/auth/register	Registers a new user (Customer or Admin).	name, email, password, role	Public
+POST	/api/auth/login	Authenticates a user and returns a JWT token.	email, password	Public
+POST	/api/auth/logout	Invalidates the user's current token (if implemented).	(Header: Authorization: Bearer <token>)	Customer, Admin
+GET	/api/auth/profile	Gets the logged-in user's profile information.	(Header: Authorization: Bearer <token>)	Customer, Admin
+
+```
