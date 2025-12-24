@@ -167,5 +167,5 @@ Routes for managing user accounts, typically accessible only to administrators.
 |--------|---------------------|-----------------------------------------------------|-------------|
 | GET    | `/api/v1/users`        | Retrieves a list of all users                       | Admin only  |
 | GET    | `/api/v1/users/:id`    | Gets details of a specific user                     | Admin only  |
-| PUT    | `/api/v1/users/:id`    | Updates a user's information (e.g., role, status)  | Admin only  |
+| PUT    | `/api/v1/users/:id`    | Updates a user's information (e.g., role, status)  | Admin, customer  |
 | DELETE | `/api/v1/users/:id`    | Deletes a user account                              | Admin only  |
