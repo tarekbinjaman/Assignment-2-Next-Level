@@ -5,8 +5,12 @@ import config from "../config";
 const auth = (...roles: string[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const token = req.headers.authorization; // when request send the token will came from header > authorization
-
+      const authHeader = req.headers.authorization; // when request send the token will came from header > authorization
+      if (!authHeader) {
+        return res.status(401).json({ message: "You are not allowed!!" });
+      }
+      const token = authHeader?.split(" ")[1];
+      console.log("THis is token for check", token);
       if (!token) {
         return res.status(500).json({ message: "You are not allowed!!" });
       } // if token not found then return with error message
@@ -32,6 +36,5 @@ const auth = (...roles: string[]) => {
     }
   };
 };
-
 
 export default auth;
