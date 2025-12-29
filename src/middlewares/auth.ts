@@ -10,7 +10,7 @@ const auth = (...roles: string[]) => {
         return res.status(401).json({ message: "You are not allowed!!" });
       }
       const token = authHeader?.split(" ")[1];
-      console.log("THis is token for check", token);
+      // console.log("THis is token for check", token);
       if (!token) {
         return res.status(500).json({ message: "You are not allowed!!" });
       } // if token not found then return with error message
